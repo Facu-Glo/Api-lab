@@ -1,6 +1,7 @@
 from typing import List
 from app.database.db import Base, engine, get_db
 from fastapi import FastAPI, Depends
+from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
 from app.schemas.user import UserCreate, UserOut
@@ -10,6 +11,11 @@ from app.models.user import User
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+
+@app.get("/", include_in_schema=False)
+def root():
+    return RedirectResponse(url="/docs")
 
 
 # Crear usuario
