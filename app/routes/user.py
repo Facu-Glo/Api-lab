@@ -19,7 +19,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
     return new_user
 
 
-@router.get("/paginated")
+@router.get("/")
 def get_users_paginated(
     db: Session = Depends(get_db),
     page: int = Query(1, ge=1),
