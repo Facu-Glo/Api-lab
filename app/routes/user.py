@@ -1,6 +1,6 @@
 # from typing import List
 import math
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database.db import get_db
@@ -12,7 +12,7 @@ router = APIRouter(prefix="/user", tags=["Users"])
 
 @router.post("/", response_model=UserOut)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    new_user = User(name=user.name, email=user.email)
+    new_user = User(**user.model_dump())
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
@@ -40,6 +40,18 @@ def get_users_paginated(
 
 
 @router.get("/{user_id}", response_model=UserOut)
-def get_user(user_id: int, db: Session = Depends(get_db)):
-    user = db.query(User).get(user_id)
-    return UserOut.model_validate(user)
+def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
+    user = db.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not encontrado")
+    return user
+
+
+@router.delete("/{user_id}")
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    user = db.get(User, user_id)
+    if user:
+        db.delete(user)
+        db.commit()
+        return {"detail": "User deleted"}
+    return {"detail": "User not found"}
