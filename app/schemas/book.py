@@ -26,3 +26,8 @@ class BookOut(BookBase):
     id: int
 
     model_config = {"from_attributes": True}
+
+
+class BookDelete(BaseModel):
+    detail: str
+    book: BookOut

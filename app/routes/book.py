@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.database.db import get_db
 from app.models.book import Book
-from app.schemas.book import BookCreate, BookOut, BookUpdate
+from app.schemas.book import BookCreate, BookDelete, BookOut, BookUpdate
 
 router = APIRouter(prefix="/books", tags=["Books"])
 
@@ -43,3 +43,13 @@ def update_book(book_id: int, book: BookUpdate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_book)
     return db_book
+
+
+@router.delete("/{book_id}", response_model=BookDelete)
+def delete_book(book_id: int, db: Session = Depends(get_db)):
+    db_book = db.get(Book, book_id)
+    if db_book:
+        db.delete(db_book)
+        db.commit()
+        return {"detail": "Book deleted", "book": db_book}
+    raise HTTPException(status_code=404, detail="Book not found")
