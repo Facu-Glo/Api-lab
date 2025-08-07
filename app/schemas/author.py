@@ -1,6 +1,14 @@
 from pydantic import BaseModel
 
 
-class AuthorOut(BaseModel):
-    id: int
+class AuthorBase(BaseModel):
     name: str
+
+
+class AuthorCreate(AuthorBase):
+    pass
+
+
+class AuthorOut(AuthorBase):
+    id: int
+    pass
