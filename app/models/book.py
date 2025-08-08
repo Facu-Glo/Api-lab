@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 from app.database.db import Base
 
 
@@ -12,3 +13,9 @@ class Book(Base):
     id_author = Column(Integer, ForeignKey("author.id"))
     id_editorial = Column(Integer, ForeignKey("editorial.id"))
     id_genre = Column(Integer, ForeignKey("genre.id"))
+
+    author = relationship("Author")
+
+    @property
+    def author_name(self):
+        return self.author.name

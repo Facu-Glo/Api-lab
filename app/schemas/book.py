@@ -23,6 +23,7 @@ class BookUpdate(BaseModel):
 
 
 class BookOut(BookBase):
+    author_name: str | None
     id: int
 
     model_config = {"from_attributes": True}
