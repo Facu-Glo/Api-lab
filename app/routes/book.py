@@ -39,7 +39,6 @@ def update_book(book_id: int, book: BookUpdate, db: Session = Depends(get_db)):
 
     for key, value in book.model_dump(exclude_unset=True).items():
         setattr(db_book, key, value)
-
     db.commit()
     db.refresh(db_book)
     return db_book
