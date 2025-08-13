@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database.db import get_db
@@ -9,7 +9,7 @@ router = APIRouter(prefix="/authors", tags=["Authors"])
 
 
 @router.post("/", response_model=AuthorOut)
-def create_author(author: AuthorCreate, db: Session = Depends(get_db)):
+def add_author(author: AuthorCreate, db: Session = Depends(get_db)):
     db_author = Author(**author.model_dump())
     db.add(db_author)
     db.commit()

@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from app.schemas.bookloan import BookloanCreate, BookloanOut
 from app.database.db import get_db
 
-router = APIRouter(prefix="/bookloan", tags=["bookloan"])
+router = APIRouter(prefix="/bookloan", tags=["Bookloan"])
 
 
 @router.post("/", response_model=BookloanOut)
