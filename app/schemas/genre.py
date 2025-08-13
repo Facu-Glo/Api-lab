@@ -8,7 +8,8 @@ class GenreBase(BaseModel):
 class GenreCreate(GenreBase):
     pass
 
+class GenreUpdate(GenreBase):
+    pass
 
 class GenreOut(GenreBase):
     id: int
-    pass
