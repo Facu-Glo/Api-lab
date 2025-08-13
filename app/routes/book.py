@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session, joinedload
 
 from app.database.db import get_db
 from app.models.book import Book
-from app.models.author import Author
 from app.schemas.book import BookCreate, BookDelete, BookOut, BookUpdate
 
 router = APIRouter(prefix="/books", tags=["Books"])

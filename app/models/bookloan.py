@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 from app.database.db import Base
 
 
@@ -13,3 +14,9 @@ class Bookloan(Base):
 
     id_boolk = Column(Integer, ForeignKey("books.id"), nullable=False)
     id_user = Column(Integer, ForeignKey("user.id"), nullable=False)
+
+    user = relationship("User")
+
+    @property
+    def user_name(self):
+        return self.user.name
