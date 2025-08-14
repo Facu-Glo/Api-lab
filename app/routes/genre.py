@@ -38,3 +38,12 @@ def modify_genre(genre_id: int, modify_genre: GenreUpdate, db: Session = Depends
     db.commit()
     db.refresh(genre)
     return genre
+
+@router.delete("/genre_id", response_model=GenreOut)
+def delete_genre(genre_id: int, db: Session = Depends(get_db)):
+    genre = db.get(Genre, genre_id)
+    if not genre:
+        raise HTTPException(status_code=404, detail="Genre not found")
+    db.delete(genre)
+    db.commit()
+    return genre

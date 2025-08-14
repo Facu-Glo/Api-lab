@@ -12,3 +12,7 @@ class AuthorCreate(AuthorBase):
 class AuthorOut(AuthorBase):
     id: int
     pass
+
+class AuthorDelete(AuthorBase):
+    id: int
+    detail: str
